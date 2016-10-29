@@ -1,0 +1,63 @@
+{% extends "layouts/default.html" %}
+
+{% block content %}
+
+{% if filmes %}
+<div class="row">
+	{% for filme in filmes %}
+	<div class="col-sm-3">
+		{{ filme.titulo }}
+	</div><!-- . -->
+	{% endfor %}
+</div><!-- .row -->
+{% endif %}
+
+{% if messages %}
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert">
+	  	<span aria-hidden="true">&times;</span>
+	</button>
+  {{ message }}
+</div>
+{% endfor %}
+
+{% endif %}
+
+
+
+<form method="POST" action="{% url 'filmes' %}" novalidate>
+	{% csrf_token %}
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Novo Filme</div>
+  		<div class="panel-body">
+
+		<div class="form-group">
+			<label for="id_titulo">{{ formulario.titulo.label }}</label>
+			{{ formulario.titulo }}
+			{{ formulario.titulo.errors }}
+		</div><!-- .form-group -->
+
+		<div class="form-group">
+			<label for="id_sinopse">{{ formulario.sinopse.label }}</label>
+			{{ formulario.sinopse }}
+			{{ formulario.sinopse.errors }}
+		</div><!-- .form-group -->
+
+		<div class="form-group">
+			<label for="id_ano_lancamento">{{ formulario.ano_lancamento.label }}</label>
+			{{ formulario.ano_lancamento }}
+			{{ formulario.ano_lancamento.errors }}
+		</div><!-- .form-group -->
+
+		<div class="text-right">
+			<button type="submit" class="btn btn-primary">Cadastrar</button>
+		</div>
+
+		</div><!-- .panel-body -->
+	</div><!-- .panel -->
+</form>
+
+{% endblock content %}
