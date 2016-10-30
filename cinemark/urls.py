@@ -22,5 +22,11 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^filmes/$', filmes.views.list, name="filmes"),
-    url(r'^filmes/store/$', filmes.views.store, name="filmes.store")
+    url(r'^filmes/store/$', filmes.views.store, name="filmes.store"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
