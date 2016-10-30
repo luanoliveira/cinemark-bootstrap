@@ -5,8 +5,10 @@
 {% if filmes %}
 <div class="row">
 	{% for filme in filmes %}
-	<div class="col-sm-3">
-		{{ filme.titulo }}
+	<div class="col-sm-2">
+		<a href="#" class="thumbnail" data-toggle="tooltip" data-placement="bottom" title="{{ filme.titulo }}">
+			<img src="https://educacaofinanceiraparatodos.files.wordpress.com/2014/09/steve-jobs-capa-filme-dvd.jpeg" alt="{{ filme.titulo }}" width="100%">
+		</a>
 	</div><!-- . -->
 	{% endfor %}
 </div><!-- .row -->
