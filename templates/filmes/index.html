@@ -25,8 +25,6 @@
 
 {% endif %}
 
-
-
 <form method="POST" action="{% url 'filmes' %}" novalidate>
 	{% csrf_token %}
 
@@ -35,21 +33,27 @@
   		<div class="panel-body">
 
 		<div class="form-group">
-			<label for="id_titulo">{{ formulario.titulo.label }}</label>
+			{{ formulario.titulo.label_tag }}
 			{{ formulario.titulo }}
-			{{ formulario.titulo.errors }}
+			{% if formulario.titulo.errors %}
+			<p class="help-block">{{ formulario.titulo.errors|first }}</p>
+			{% endif %}
 		</div><!-- .form-group -->
 
 		<div class="form-group">
-			<label for="id_sinopse">{{ formulario.sinopse.label }}</label>
+			{{ formulario.sinopse.label_tag }}
 			{{ formulario.sinopse }}
-			{{ formulario.sinopse.errors }}
+			{% if formulario.sinopse.errors %}
+			<p class="help-block">{{ formulario.sinopse.errors|first }}</p>
+			{% endif %}
 		</div><!-- .form-group -->
 
 		<div class="form-group">
-			<label for="id_ano_lancamento">{{ formulario.ano_lancamento.label }}</label>
+			{{ formulario.ano_lancamento.label_tag }}
 			{{ formulario.ano_lancamento }}
-			{{ formulario.ano_lancamento.errors }}
+			{% if formulario.ano_lancamento.errors %}
+			<p class="help-block">{{ formulario.ano_lancamento.errors|first }}</p>
+			{% endif %}
 		</div><!-- .form-group -->
 
 		<div class="text-right">
