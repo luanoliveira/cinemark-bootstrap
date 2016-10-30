@@ -32,7 +32,7 @@
 		<div class="panel-heading">Novo Filme</div>
   		<div class="panel-body">
 
-		<div class="form-group">
+		<div class="form-group{% if formulario.titulo.errors %} has-error{% endif %}">
 			{{ formulario.titulo.label_tag }}
 			{{ formulario.titulo }}
 			{% if formulario.titulo.errors %}
@@ -40,7 +40,7 @@
 			{% endif %}
 		</div><!-- .form-group -->
 
-		<div class="form-group">
+		<div class="form-group{% if formulario.sinopse.errors %} has-error{% endif %}">
 			{{ formulario.sinopse.label_tag }}
 			{{ formulario.sinopse }}
 			{% if formulario.sinopse.errors %}
@@ -48,7 +48,7 @@
 			{% endif %}
 		</div><!-- .form-group -->
 
-		<div class="form-group">
+		<div class="form-group{% if formulario.ano_lancamento.errors %} has-error{% endif %}">
 			{{ formulario.ano_lancamento.label_tag }}
 			{{ formulario.ano_lancamento }}
 			{% if formulario.ano_lancamento.errors %}
