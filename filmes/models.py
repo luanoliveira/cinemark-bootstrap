@@ -8,3 +8,4 @@ class Filme(models.Model):
     titulo = models.CharField(max_length=150)
     sinopse = models.TextField()
     ano_lancamento = models.DateField()
+    youtube = models.TextField()

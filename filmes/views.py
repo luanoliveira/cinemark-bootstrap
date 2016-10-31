@@ -12,7 +12,8 @@ def list(request):
 		filme = Filme(
 			titulo=formulario.cleaned_data["titulo"],
 			sinopse=formulario.cleaned_data["sinopse"],
-			ano_lancamento=formulario.cleaned_data["ano_lancamento"]
+			ano_lancamento=formulario.cleaned_data["ano_lancamento"],
+			youtube=formulario.cleaned_data["youtube"]
 		)
 		filme.save()
 
@@ -29,3 +30,11 @@ def list(request):
 def store(request):
 	print( request.POST )
 	return render(request, 'filmes/store.html')
+
+
+def view(request, id):
+	data = {
+		"filme": Filme.objects.get(pk=id)
+	}
+	
+	return render(request, 'filmes/view.html', data)

@@ -1,0 +1,8 @@
+{% extends "layouts/default.html" %}
+
+{% block content %}
+<h1>{{ filme.titulo }}</h1>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/{{ filme.youtube }}" frameborder="0" allowfullscreen></iframe>
+
+{% endblock content %}

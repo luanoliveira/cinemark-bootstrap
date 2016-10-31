@@ -6,7 +6,7 @@
 <div class="row">
 	{% for filme in filmes %}
 	<div class="col-sm-2">
-		<a href="#" class="thumbnail" data-toggle="tooltip" data-placement="bottom" title="{{ filme.titulo }}">
+		<a href="{% url 'filmes.view' id=filme.id %}" class="thumbnail" data-toggle="tooltip" data-placement="bottom" title="{{ filme.titulo }}">
 			<img src="https://educacaofinanceiraparatodos.files.wordpress.com/2014/09/steve-jobs-capa-filme-dvd.jpeg" alt="{{ filme.titulo }}" width="100%">
 		</a>
 	</div><!-- . -->
@@ -55,6 +55,14 @@
 			{{ formulario.ano_lancamento }}
 			{% if formulario.ano_lancamento.errors %}
 			<p class="help-block">{{ formulario.ano_lancamento.errors|first }}</p>
+			{% endif %}
+		</div><!-- .form-group -->
+
+		<div class="form-group{% if formulario.youtube.errors %} has-error{% endif %}">
+			{{ formulario.youtube.label_tag }}
+			{{ formulario.youtube }}
+			{% if formulario.youtube.errors %}
+			<p class="help-block">{{ formulario.youtube.errors|first }}</p>
 			{% endif %}
 		</div><!-- .form-group -->
 
