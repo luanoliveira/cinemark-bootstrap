@@ -15,6 +15,18 @@ class TagInput(TextInput):
         }
         super(TagInput, self).__init__(attrs)
 
+    def format_value(self, value):
+        
+        if ( isinstance(value, basestring) ):
+            return value
+            
+        tags = []
+        
+        for tag in value:
+            tags.append(tag.titulo)
+
+        return ','.join(tags)
+
  
 class ChannelWidget(Widget):
    input_type = None

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Filme
+from .models import Filme, Tag
 from .forms import FilmeForm
 from django.forms.models import model_to_dict
 
@@ -32,20 +32,36 @@ def create(request):
    return render(request, 'filmes/create.html', data)
 
 def edit(request, pk):
-   filme = Filme.objects.get(pk=5)
-
+   filme = Filme.objects.get(pk=pk)
+   
    formulario = FilmeForm(model_to_dict(filme))
 
-   if ( request.POST and data["formulario"].is_valid ):
-      filme.titulo=formulario.cleaned_data["titulo"],
-      filme.sinopse=formulario.cleaned_data["sinopse"],
-      filme.ano_lancamento=formulario.cleaned_data["ano_lancamento"],
-      filme.youtube=formulario.cleaned_data["youtube"] 
-      
-      filme.save()
+   if ( request.POST ):
+      formulario = FilmeForm(request.POST)
 
-      messages.success(request, 'Filme cadastrado com sucesso.')
-      return redirect('filmes.edit', pk=pk)
+      if ( formulario.is_valid() ):
+         
+         filme.titulo=formulario.cleaned_data["titulo"];
+         filme.sinopse=formulario.cleaned_data["sinopse"];
+         filme.ano_lancamento=formulario.cleaned_data["ano_lancamento"];
+         filme.youtube=formulario.cleaned_data["youtube"];
+         
+         filme.save()
+
+         if ( filme.tags.all() ):
+            #filme.tags.delete()
+            filme.tags.clear()
+
+         for tag in formulario.cleaned_data["tags"].split(","):
+               
+            try:
+               model_tag = Tag.objects.get(titulo=tag)
+               filme.tags.add(model_tag)
+            except:
+               filme.tags.add(Tag.objects.create(titulo=tag))
+
+         messages.success(request, 'Filme cadastrado com sucesso.')
+         return redirect('filmes.edit', pk=pk)
 
    return render(request, 'filmes/edit.html', {
       "filme": filme,
