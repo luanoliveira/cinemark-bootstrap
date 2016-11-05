@@ -2,18 +2,36 @@
 
 {% block content %}
 
-{% if filmes %}
-<table class="table">
-	{% for filme in filmes %}
-	<tr>
-		<td>{{ filme.titulo }}</td>
-		<td>{{ filme.ano_lancamento }}</td>
-		<td>
-			<a href="{% url 'filmes.edit' pk=filme.pk %}">Editar</a>
-		</td>
-	</tr>
-	{% endfor %}
-</table><!-- .table -->
-{% endif %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Meus Filmes</h3>
+	</div>
+	<div class="panel-body">
+
+		{% if filmes %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Título</th>
+					<th colspan="2">Ano de Lançamento</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for filme in filmes %}
+			<tr>
+				<td style="vertical-align: middle;">{{ filme.titulo }}</td>
+				<td style="vertical-align: middle;">{{ filme.ano_lancamento }}</td>
+				<td style="vertical-align: middle;" class="text-right">
+					<a href="{% url 'filmes.edit' pk=filme.pk %}" class="btn btn-primary btn-sm">Editar</a>
+				</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table><!-- .table -->
+		{% endif %}
+
+	</div>
+</div>
+
 
 {% endblock content %}

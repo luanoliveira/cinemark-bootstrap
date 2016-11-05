@@ -4,8 +4,12 @@ from .models import Filme, Tag
 from .forms import FilmeForm
 from django.forms.models import model_to_dict
 
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def index(request):
+   
+   #print( request.user )
 
    data = {
       "filmes": Filme.objects.all()
@@ -13,11 +17,12 @@ def index(request):
 
    return render(request, 'filmes/index.html', data)
 
+@login_required
 def store(request):
    print( request.POST )
    return render(request, 'filmes/store.html')
 
-
+@login_required
 def view(request, id):
    data = {
       "filme": Filme.objects.get(pk=id)
@@ -25,12 +30,14 @@ def view(request, id):
    
    return render(request, 'filmes/view.html', data)
 
+@login_required
 def create(request):
    data = {
       "formulario": FilmeForm()
    }
    return render(request, 'filmes/create.html', data)
 
+@login_required
 def edit(request, pk):
    filme = Filme.objects.get(pk=pk)
    
@@ -68,6 +75,7 @@ def edit(request, pk):
       "formulario": formulario
    })
 
+@login_required
 def store(request):
       
    if ( request.POST ):

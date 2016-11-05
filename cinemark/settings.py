@@ -31,6 +31,11 @@ INTERNAL_IPS = ('127.0.0.1',)
 
 NAME_ADMIN = 'gestor'
 
+# LOGIN/AUTENTICACAO
+LOGIN_URL="/admin/"
+LOGOUT_URL="/logout/"
+LOGIN_REDIRECT_URL="/"
+
 # Application definition
 
 INSTALLED_APPS = [
