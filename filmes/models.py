@@ -10,7 +10,6 @@ class Tag(models.Model):
 class Filme(models.Model):
     titulo = models.CharField(max_length=150)
     sinopse = models.TextField()
-    ano_lancamento = models.DateField()
+    ano_lancamento = models.CharField(max_length=4)
     youtube = models.TextField()
     tags = models.ManyToManyField(Tag)
-

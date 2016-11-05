@@ -8,13 +8,27 @@
 		<div class="panel-heading">Novo Filme</div>
   		<div class="panel-body">
 
-		<div class="form-group{% if formulario.titulo.errors %} has-error{% endif %}">
-			{{ formulario.titulo.label_tag }}
-			{{ formulario.titulo }}
-			{% if formulario.titulo.errors %}
-			<p class="help-block">{{ formulario.titulo.errors|first }}</p>
-			{% endif %}
-		</div><!-- .form-group -->
+      <div class="row">
+         <div class="col-sm-8">
+            <div class="form-group{% if formulario.titulo.errors %} has-error{% endif %}">
+               {{ formulario.titulo.label_tag }}
+               {{ formulario.titulo }}
+               {% if formulario.titulo.errors %}
+               <p class="help-block">{{ formulario.titulo.errors|first }}</p>
+               {% endif %}
+            </div><!-- .form-group -->
+         </div><!-- . -->
+
+         <div class="col-sm-4">
+            <div class="form-group{% if formulario.ano_lancamento.errors %} has-error{% endif %}">
+               {{ formulario.ano_lancamento.label_tag }}
+               {{ formulario.ano_lancamento }}
+               {% if formulario.ano_lancamento.errors %}
+               <p class="help-block">{{ formulario.ano_lancamento.errors|first }}</p>
+               {% endif %}
+            </div><!-- .form-group -->
+         </div><!-- . -->
+      </div><!-- .row -->
 
 		<div class="form-group{% if formulario.sinopse.errors %} has-error{% endif %}">
 			{{ formulario.sinopse.label_tag }}
@@ -23,15 +37,7 @@
 			<p class="help-block">{{ formulario.sinopse.errors|first }}</p>
 			{% endif %}
 		</div><!-- .form-group -->
-
-		<div class="form-group{% if formulario.ano_lancamento.errors %} has-error{% endif %}">
-			{{ formulario.ano_lancamento.label_tag }}
-			{{ formulario.ano_lancamento }}
-			{% if formulario.ano_lancamento.errors %}
-			<p class="help-block">{{ formulario.ano_lancamento.errors|first }}</p>
-			{% endif %}
-		</div><!-- .form-group -->
-
+		
 		<div class="form-group{% if formulario.youtube.errors %} has-error{% endif %}">
 			{{ formulario.youtube.label_tag }}
 			{{ formulario.youtube }}
@@ -49,7 +55,7 @@
 		</div><!-- .form-group -->
 
 		<div class="text-right">
-			<button type="submit" class="btn btn-primary">Cadastrar</button>
+			<button type="submit" class="btn btn-primary">Atualizar Filme [{{ filme.pk }}]</button>
 		</div>
 
 		</div><!-- .panel-body -->
