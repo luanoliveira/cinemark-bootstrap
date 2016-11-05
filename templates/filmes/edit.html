@@ -1,0 +1,58 @@
+{% extends "layouts/default.html" %}
+
+{% block content %}
+<form method="POST" action="{% url 'filmes.edit' pk=filme.pk %}" novalidate>
+	{% csrf_token %}
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Novo Filme</div>
+  		<div class="panel-body">
+
+		<div class="form-group{% if formulario.titulo.errors %} has-error{% endif %}">
+			{{ formulario.titulo.label_tag }}
+			{{ formulario.titulo }}
+			{% if formulario.titulo.errors %}
+			<p class="help-block">{{ formulario.titulo.errors|first }}</p>
+			{% endif %}
+		</div><!-- .form-group -->
+
+		<div class="form-group{% if formulario.sinopse.errors %} has-error{% endif %}">
+			{{ formulario.sinopse.label_tag }}
+			{{ formulario.sinopse }}
+			{% if formulario.sinopse.errors %}
+			<p class="help-block">{{ formulario.sinopse.errors|first }}</p>
+			{% endif %}
+		</div><!-- .form-group -->
+
+		<div class="form-group{% if formulario.ano_lancamento.errors %} has-error{% endif %}">
+			{{ formulario.ano_lancamento.label_tag }}
+			{{ formulario.ano_lancamento }}
+			{% if formulario.ano_lancamento.errors %}
+			<p class="help-block">{{ formulario.ano_lancamento.errors|first }}</p>
+			{% endif %}
+		</div><!-- .form-group -->
+
+		<div class="form-group{% if formulario.youtube.errors %} has-error{% endif %}">
+			{{ formulario.youtube.label_tag }}
+			{{ formulario.youtube }}
+			{% if formulario.youtube.errors %}
+			<p class="help-block">{{ formulario.youtube.errors|first }}</p>
+			{% endif %}
+		</div><!-- .form-group -->
+
+		<div class="form-group{% if formulario.tags.errors %} has-error{% endif %}">
+			{{ formulario.tags.label_tag }}
+			{{ formulario.tags }}
+			{% if formulario.tags.errors %}
+			<p class="help-block">{{ formulario.tags.errors|first }}</p>
+			{% endif %}
+		</div><!-- .form-group -->
+
+		<div class="text-right">
+			<button type="submit" class="btn btn-primary">Cadastrar</button>
+		</div>
+
+		</div><!-- .panel-body -->
+	</div><!-- .panel -->
+</form>
+{% endblock content %}

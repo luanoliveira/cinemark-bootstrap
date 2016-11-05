@@ -21,9 +21,11 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^filmes/$', filmes.views.list, name="filmes"),
-    url(r'^filmes/(?P<id>[0-9]+)/$', filmes.views.view, name="filmes.view"),
-    url(r'^filmes/store/$', filmes.views.store, name="filmes.store")
+    url(r'^'+settings.NAME_ADMIN+'/filmes/$', filmes.views.index, name="filmes.index"),
+    url(r'^'+settings.NAME_ADMIN+'/filmes/(?P<id>[0-9]+)/$', filmes.views.view, name="filmes.view"),
+    url(r'^'+settings.NAME_ADMIN+'/filmes/store/$', filmes.views.store, name="filmes.store"),
+    url(r'^'+settings.NAME_ADMIN+'/filmes/create/$', filmes.views.create, name="filmes.create"),
+    url(r'^'+settings.NAME_ADMIN+'/filmes/edit/(?P<pk>[0-9]+)/$', filmes.views.edit, name="filmes.edit")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

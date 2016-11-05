@@ -6,6 +6,15 @@ from django.forms.utils import flatatt, to_current_timezone
 from django.utils.encoding import (
     force_str, force_text, python_2_unicode_compatible,
 )
+
+
+class TagInput(TextInput):
+    def __init__(self, attrs=None):
+        attrs = {
+            'class': 'form-control tagsinput',
+        }
+        super(TagInput, self).__init__(attrs)
+
  
 class ChannelWidget(Widget):
    input_type = None

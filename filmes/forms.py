@@ -1,7 +1,7 @@
 #coding: utf-8
 
 from django import forms
-from .widgets import ChannelWidget
+from .widgets import ChannelWidget, TagInput
 
 class FilmeForm(forms.Form):
    titulo = forms.CharField(
@@ -21,6 +21,10 @@ class FilmeForm(forms.Form):
    youtube = forms.CharField(
       label="Código do YouTube", 
       widget=forms.TextInput(attrs={'class': 'form-control'})
+   )
+   tags = forms.CharField(
+      label="Tags",
+      widget=TagInput()
    )
    '''
    channels = forms.CharField(

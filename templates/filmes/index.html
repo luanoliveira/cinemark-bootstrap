@@ -3,75 +3,17 @@
 {% block content %}
 
 {% if filmes %}
-<div class="row">
+<table class="table">
 	{% for filme in filmes %}
-	<div class="col-sm-2">
-		<a href="{% url 'filmes.view' id=filme.id %}" class="thumbnail" data-toggle="tooltip" data-placement="bottom" title="{{ filme.titulo }}">
-			<img src="https://educacaofinanceiraparatodos.files.wordpress.com/2014/09/steve-jobs-capa-filme-dvd.jpeg" alt="{{ filme.titulo }}" width="100%">
-		</a>
-	</div><!-- . -->
+	<tr>
+		<td>{{ filme.titulo }}</td>
+		<td>{{ filme.ano_lancamento }}</td>
+		<td>
+			<a href="{% url 'filmes.edit' pk=filme.pk %}">Editar</a>
+		</td>
+	</tr>
 	{% endfor %}
-</div><!-- .row -->
+</table><!-- .table -->
 {% endif %}
-
-{% if messages %}
-
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }} alert-dismissible">
-  <button type="button" class="close" data-dismiss="alert">
-	  	<span aria-hidden="true">&times;</span>
-	</button>
-  {{ message }}
-</div>
-{% endfor %}
-
-{% endif %}
-
-<form method="POST" action="{% url 'filmes' %}" novalidate>
-	{% csrf_token %}
-
-	<div class="panel panel-default">
-		<div class="panel-heading">Novo Filme</div>
-  		<div class="panel-body">
-
-		<div class="form-group{% if formulario.titulo.errors %} has-error{% endif %}">
-			{{ formulario.titulo.label_tag }}
-			{{ formulario.titulo }}
-			{% if formulario.titulo.errors %}
-			<p class="help-block">{{ formulario.titulo.errors|first }}</p>
-			{% endif %}
-		</div><!-- .form-group -->
-
-		<div class="form-group{% if formulario.sinopse.errors %} has-error{% endif %}">
-			{{ formulario.sinopse.label_tag }}
-			{{ formulario.sinopse }}
-			{% if formulario.sinopse.errors %}
-			<p class="help-block">{{ formulario.sinopse.errors|first }}</p>
-			{% endif %}
-		</div><!-- .form-group -->
-
-		<div class="form-group{% if formulario.ano_lancamento.errors %} has-error{% endif %}">
-			{{ formulario.ano_lancamento.label_tag }}
-			{{ formulario.ano_lancamento }}
-			{% if formulario.ano_lancamento.errors %}
-			<p class="help-block">{{ formulario.ano_lancamento.errors|first }}</p>
-			{% endif %}
-		</div><!-- .form-group -->
-
-		<div class="form-group{% if formulario.youtube.errors %} has-error{% endif %}">
-			{{ formulario.youtube.label_tag }}
-			{{ formulario.youtube }}
-			{% if formulario.youtube.errors %}
-			<p class="help-block">{{ formulario.youtube.errors|first }}</p>
-			{% endif %}
-		</div><!-- .form-group -->
-
-		<div class="text-right">
-			<button type="submit" class="btn btn-primary">Cadastrar</button>
-		</div>
-
-		</div><!-- .panel-body -->
-	</div><!-- .panel -->
-</form>
 
 {% endblock content %}
