@@ -28,6 +28,24 @@
 			{% endfor %}
 			</tbody>
 		</table><!-- .table -->
+
+		<div class="pagination">
+			<span class="step-links">
+				{% if filmes.has_previous %}
+						<a href="?page={{ filmes.previous_page_number }}">previous</a>
+				{% endif %}
+
+				<span class="current">
+						Page {{ filmes.number }} of {{ filmes.paginator.num_pages }}.
+				</span>
+
+				{% if filmes.has_next %}
+						<a href="?page={{ filmes.next_page_number }}">next</a>
+				{% endif %}
+			</span>
+		</div>
+
+
 		{% endif %}
 
 	</div>

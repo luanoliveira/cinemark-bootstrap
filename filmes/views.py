@@ -3,16 +3,30 @@ from django.contrib import messages
 from .models import Filme, Tag
 from .forms import FilmeForm
 from django.forms.models import model_to_dict
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.contrib.auth.decorators import login_required
 
 @login_required
 def index(request):
    
+   filmes = Filme.objects.all()
+      
+   paginator = Paginator(filmes, 5)
    #print( request.user )
 
+   page = request.GET.get('page')
+   try:
+      filmes = paginator.page(page)
+   except PageNotAnInteger:
+      # If page is not an integer, deliver first page.
+      filmes = paginator.page(1)
+   except EmptyPage:
+      # If page is out of range (e.g. 9999), deliver last page of results.
+      filmes = paginator.page(paginator.num_pages)
+
    data = {
-      "filmes": Filme.objects.all()
+      "filmes": filmes
    }
 
    return render(request, 'filmes/index.html', data)
