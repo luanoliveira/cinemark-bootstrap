@@ -50,6 +50,14 @@
          {% endif %}
       </div><!-- .form-group -->
 
+      <div class="form-group{% if formulario.capa.errors %} has-error{% endif %}">
+         {{ formulario.capa.label_tag }}
+         {{ formulario.capa }}
+         {% if formulario.capa.errors %}
+         <p class="help-block">{{ formulario.capa.errors|first }}</p>
+         {% endif %}
+      </div><!-- .form-group -->
+
       <div class="text-right">
          <button type="submit" class="btn btn-primary">{{ button }}</button>
       </div>

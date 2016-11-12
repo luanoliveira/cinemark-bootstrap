@@ -1,7 +1,7 @@
 {% extends "layouts/default.html" %}
 
 {% block content %}
-<form method="POST" action="{% url 'filmes.store' %}" novalidate>
+<form method="POST" action="{% url 'filmes.store' %}" enctype="multipart/form-data" novalidate>
 	{% include "filmes/formulario.html" with title="Novo Filme" button="Cadastrar" %}
 </form>
 {% endblock content %}

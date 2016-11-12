@@ -8,7 +8,7 @@ from datetime import datetime
 
 def validators_date(value):
    try:
-       datetime.strptime(value, "%Y")
+      datetime.strptime(value, "%Y")
    except Exception:
       raise ValidationError(
          '%(value)s is not an even number',
@@ -39,6 +39,7 @@ class FilmeForm(forms.Form):
       label="Tags",
       widget=TagInput()
    )
+   capa = forms.ImageField()
    '''
    channels = forms.CharField(
       widget=ChannelWidget(),

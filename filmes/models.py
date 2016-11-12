@@ -16,11 +16,12 @@ def validators_date(value):
 # Create your models here.
 
 class Tag(models.Model):
-    titulo = models.CharField(max_length=100)
+   titulo = models.CharField(max_length=100)
 
 class Filme(models.Model):
-    titulo = models.CharField(max_length=150)
-    sinopse = models.TextField()
-    ano_lancamento = models.TextField(max_length=4, validators=[validators_date])
-    youtube = models.TextField()
-    tags = models.ManyToManyField(Tag)
+   titulo = models.CharField(max_length=150)
+   sinopse = models.TextField()
+   ano_lancamento = models.TextField(max_length=4, validators=[validators_date])
+   youtube = models.TextField()
+   tags = models.ManyToManyField(Tag)
+   capa = models.ImageField(upload_to='filmes/%Y/%m/%d')

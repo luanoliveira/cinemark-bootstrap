@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^'+settings.NAME_ADMIN+'/filmes/store/$', filmes.views.store, name="filmes.store"),
     url(r'^'+settings.NAME_ADMIN+'/filmes/create/$', filmes.views.create, name="filmes.create"),
     url(r'^'+settings.NAME_ADMIN+'/filmes/edit/(?P<pk>[0-9]+)/$', filmes.views.edit, name="filmes.edit")
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
