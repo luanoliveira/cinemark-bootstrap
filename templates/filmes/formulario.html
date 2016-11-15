@@ -1,3 +1,5 @@
+{% load image %}
+
 <div class="panel panel-default">
    <div class="panel-heading">{{ title }}</div>
    <div class="panel-body">
@@ -55,6 +57,12 @@
          {{ formulario.capa }}
          {% if formulario.capa.errors %}
          <p class="help-block">{{ formulario.capa.errors|first }}</p>
+         {% endif %}
+
+         {% if filme.capa %}
+            <a href="{{ filme.capa.url }}" class="thumbnail" style="width: 250px;">
+               <img src="{{ filme.capa.url|image_path:"/250x320/" }}" alt="{{ filme.titulo }}">
+            </a>
          {% endif %}
       </div><!-- .form-group -->
 

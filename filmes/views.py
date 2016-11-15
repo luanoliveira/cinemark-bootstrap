@@ -10,27 +10,40 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
 import os
-from PIL import Image
+from PIL import Image, ImageOps
+
+import pprint
+
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
+
+from django.contrib.auth.models import User
+
+from django.views.generic import ListView
 
 
-def cortar(image, width, height):
-   file = Image.open(image)
-
-   original = (file.size[0], file.size[1])
-
-   file = file.resize((original[1]*height/original[0], height), Image.ANTIALIAS)
+def cortar(media, width, height):
+   media_path = os.path.join(settings.MEDIA_ROOT, media)
    
-   file = file.crop((0, 0, width, height))
-   
-   file.save(os.path.join(os.path.dirname(image), str(width)+"x"+str(height)+"_"+os.path.basename(image)))
+   size = (width, height)
 
+   image = Image.open(media_path)
 
+   image = ImageOps.fit(image, size, Image.ANTIALIAS)
+
+   name_path = str(size[0])+"x"+str(size[1])
+   path = os.path.dirname(media_path)+"/"+name_path
+
+   if ( not os.path.exists(path) ):
+      os.mkdir(path, 0755)
+
+   image.save(os.path.join(path, os.path.basename(media_path)))
 
 
 @login_required
 def index(request):
    
-   filmes = Filme.objects.all()
+   filmes = Filme.objects.all().filter(user=User.objects.get(pk=request.user.pk))
       
    paginator = Paginator(filmes, 5)
    #print( request.user )
@@ -66,9 +79,11 @@ def view(request, id):
 
 @login_required
 def create(request):
+
    data = {
       "formulario": FilmeForm()
    }
+
    return render(request, 'filmes/create.html', data)
 
 @login_required
@@ -76,20 +91,32 @@ def edit(request, pk):
    filme = Filme.objects.get(pk=pk)
    
    formulario = FilmeForm(model_to_dict(filme))
-
-   if ( request.POST and request.FILES ):
+   
+   if ( filme.capa ):
+      formulario['capa'].field.required = False
+   
+   if ( request.POST ):
 
       formulario = FilmeForm(request.POST, request.FILES)
 
+      if ( filme.capa ):
+         formulario['capa'].field.required = False
+
       if ( formulario.is_valid() ):
          
-         filme.titulo=formulario.cleaned_data["titulo"]
-         filme.sinopse=formulario.cleaned_data["sinopse"]
-         filme.ano_lancamento=formulario.cleaned_data["ano_lancamento"]
-         filme.youtube=formulario.cleaned_data["youtube"]
-         filme.capa=request.FILES['capa']
+         filme.titulo = request.POST["titulo"]
+         filme.sinopse = request.POST["sinopse"]
+         filme.ano_lancamento = request.POST["ano_lancamento"]
+         filme.youtube = request.POST["youtube"]
+         filme.user = User.objects.get(pk=request.user.pk)
+
+         if ( 'capa' in request.FILES ):
+            filme.capa=request.FILES['capa']
          
          filme.save()
+
+         if ( filme.capa ):
+            cortar(filme.capa.name, 250, 320)
 
          if ( filme.tags.all() ):
             #filme.tags.delete()
@@ -116,38 +143,22 @@ def store(request):
       
    if ( request.POST ):
 
-      '''
-      if ( 'capa' in request.FILES ):
-         capa = os.path.join(settings.BASE_DIR, 'media/filmes/'+request.FILES['capa'].name)
-         
-         f = request.FILES['capa'].read()
-
-         with open(capa, 'wb+') as destination:
-            for chunk in request.FILES['capa'].chunks():
-               destination.write(chunk)
-         #print( request.FILES['capa'].read() )
-      '''
-
       formulario = FilmeForm(request.POST, request.FILES)
 
       if ( formulario.is_valid() ):
          filme = Filme(
-            titulo=formulario.cleaned_data["titulo"],
-            sinopse=formulario.cleaned_data["sinopse"],
-            ano_lancamento=formulario.cleaned_data["ano_lancamento"],
-            youtube=formulario.cleaned_data["youtube"],
-            capa=request.FILES['capa']
+            titulo=request.POST["titulo"],
+            sinopse=request.POST["sinopse"],
+            ano_lancamento=request.POST["ano_lancamento"],
+            youtube=request.POST["youtube"],
+            capa=request.FILES['capa'],
+            user=User.objects.get(pk=request.user.pk)
          )
 
          filme.save()
 
          if ( filme.capa ):
-            #filmes/2016/11/12/602x0_1439644246_ZRh0dNf.jpg
-            capa = os.path.join(settings.MEDIA_ROOT, filme.capa.name)
-
-            cortar(capa, 200, 200)
-            
-         #print( filme.capa )
+            cortar(filme.capa.name, 250, 320)
 
          for tag in formulario.cleaned_data["tags"].split(","):
                
@@ -157,8 +168,8 @@ def store(request):
             except:
                filme.tags.add(Tag.objects.create(titulo=tag))
             
-         #messages.success(request, 'Filme cadastrado com sucesso.')
-         #return redirect('filmes.create')
+         messages.success(request, 'Filme cadastrado com sucesso.')
+         return redirect('filmes.create')
       
       return render(request, 'filmes/create.html', {
          "formulario": formulario
@@ -166,8 +177,20 @@ def store(request):
 
    return redirect('filmes.index')
 
+class HomeList(ListView):
+   model = Filme
+   template_name = 'home.html'
 
+   def get_context_data(self, **kwargs):
+      context = super(HomeList, self).get_context_data(**kwargs)
+      context['nome_do_cara'] = 'Luan da Silva Oliveira'
+      return context
 
+class FilmeDelete(DeleteView):
+   model = Filme
+   success_url = reverse_lazy('filmes.index')
+   success_message = 'Filme deletado com sucesso.'
 
-
-   
+   def delete(self, request, *args, **kwargs):
+      messages.success(self.request, self.success_message)
+      return super(FilmeDelete, self).delete(request, *args, **kwargs)

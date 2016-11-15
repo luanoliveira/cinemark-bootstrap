@@ -1,0 +1,14 @@
+{% extends 'layouts/default.html' %}
+
+{% block content %}
+
+<h2>{{ nome_do_cara }}</h2>
+
+{% for filme in object_list %}
+<article>
+	<h1>{{ filme.titulo }}</h1>
+	<p>{{ filme.user }}</p>
+</article>
+{% endfor %}
+
+{% endblock %}
