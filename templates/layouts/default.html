@@ -93,8 +93,44 @@
       </div><!-- .container -->
 
       <script type="text/javascript" src="{% static "plugins/jquery-2.2.5.min.js" %}"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
       <script type="text/javascript" src="{% static "plugins/bootstrap-3.3.7/js/bootstrap.min.js" %}"></script>
       <script type="text/javascript" src="{% static "plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js" %}"></script>
       <script type="text/javascript" src="{% static "js/cinemark-bootstrap.js" %}"></script>
+
+      <script type="text/javascript">
+        
+
+         function AppViewModel() {
+            var self = this;
+
+            self.clone = {}
+
+            $(".clone").each(function(i, e) {
+               var name = $(this).data("clone");
+               self.clone[name] = ko.observableArray([
+                  { 
+                     name: name,
+                     type: "text"
+                  },
+               ]);
+            });
+    
+         }
+
+         var App = new AppViewModel();
+
+         $(".clone button").on("click", function(event) {
+            event.preventDefault();
+            var name = $(this).parents(".clone").data("clone");
+            App.clone[name].push({
+               name: name,
+               type: "text"
+            }); 
+         });
+          
+         ko.applyBindings(App);
+
+      </script>
    </body>
 </html>

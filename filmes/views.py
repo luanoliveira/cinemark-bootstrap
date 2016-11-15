@@ -15,6 +15,8 @@ from PIL import Image, ImageOps
 import pprint
 
 from django.views.generic.edit import DeleteView
+from django.views.generic.detail import DetailView
+
 from django.urls import reverse_lazy
 
 from django.contrib.auth.models import User
@@ -176,6 +178,11 @@ def store(request):
       });
 
    return redirect('filmes.index')
+
+class FilmeDetail(DetailView):
+   model = Filme
+   template_name = 'filmes/detail.html'
+
 
 class HomeList(ListView):
    model = Filme

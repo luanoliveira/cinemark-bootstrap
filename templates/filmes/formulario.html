@@ -52,6 +52,16 @@
          {% endif %}
       </div><!-- .form-group -->
 
+      <div class="form-group">
+         <label>Download</label>
+         <div class="clone" data-clone="downloads">
+            <div data-bind="foreach: clone.downloads">
+               <input type="text" name="nome[]" class="form-control">
+            </div>
+            <button>Clone</button>
+         </div><!-- .repeat -->
+      </div><!-- .form-group -->
+
       <div class="form-group{% if formulario.capa.errors %} has-error{% endif %}">
          {{ formulario.capa.label_tag }}
          {{ formulario.capa }}

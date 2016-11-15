@@ -23,6 +23,9 @@ from django.contrib.auth.views import logout
 
 urlpatterns = [
     url(r'^$', filmes.views.HomeList.as_view(), name="home"),
+    url(r'^filme/(?P<pk>[0-9]+)/$', filmes.views.FilmeDetail.as_view(), name="filmes.detail"),
+
+
     url(r'^admin/', admin.site.urls),
     url(r'^'+settings.NAME_ADMIN+'/filmes/$', filmes.views.index, name="filmes.index"),
     url(r'^'+settings.NAME_ADMIN+'/filmes/(?P<id>[0-9]+)/$', filmes.views.view, name="filmes.view"),
